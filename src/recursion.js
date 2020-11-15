@@ -9,7 +9,7 @@
 var factorial = function(n) {
     return (n<0) ? null : (n===0) ? 1 : (n === 1) ? n : factorial(n-1) * n;
 };
-console.log(factorial(5)); // 120
+// console.log(factorial(5)); // 120
 // 2. Compute the sum of an array of integers.
 // sum([1,2,3,4,5,6]); // 21
 var sum = function(array) {
@@ -26,17 +26,54 @@ var sum = function(array) {
 // 3. Sum all numbers in an array containing nested arrays.
 // arraySum([1,[2,3],[[4]],5]); // 15
 var arraySum = function(array) {
+    if(!array.length){
+        return 0;
+    }
+    if(array.length === 1) {
+        if(typeof array[0] === "object") {
+            array = arraySum([...array]);
+        }
+        return array[0];
+    }
+    let smallerArr = array.slice(1);
+    return arraySum(smallerArr) + array[0];
 };
 
 // 4. Check if a number is even.
 var isEven = function(n) {
+    //subtract by 2 until 0 or 1
+    if(n === 0){
+        return true;
+    } else if(n === 1){
+        return false;
+    }
+    return isEven(Math.abs(n) - 2);
 };
 
 // 5. Sum all integers below a given integer.
 // sumBelow(10); // 45
 // sumBelow(7); // 21
 var sumBelow = function(n) {
+    if(n > 0){
+        if(Math.abs(n) === 2){
+            return 1;
+        }
+        return sumBelow(n-1) + n-1;   
+    } else if(n <= 0) {
+        if(n === 0) {
+            return 0;
+        }
+        return sumBelow(n+1) + n+1;
+    }
+    return n;
 };
+//21 <- result
+//15 + 6
+//10 + 5
+//6 + 4
+//3 + 3
+//1 + 2
+//1
 
 // 6. Get the integers within a range (x, y).
 // range(2,9); // [3,4,5,6,7,8]
