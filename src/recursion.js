@@ -29,15 +29,18 @@ var arraySum = function(array) {
     if(!array.length){
         return 0;
     }
-    if(array.length === 1) {
-        if(typeof array[0] === "object") {
-            array = arraySum([...array]);
-        }
+
+    let value = array[0];
+    if (Array.isArray(value)) {
+        value = arraySum(value);
+    } else if (array.length === 1) {
+        //base case
         return array[0];
     }
     let smallerArr = array.slice(1);
-    return arraySum(smallerArr) + array[0];
+    return Number(arraySum(smallerArr)) + Number(value);
 };
+console.log(arraySum([[12,[[34],[56]],78]]));
 
 // 4. Check if a number is even.
 var isEven = function(n) {
@@ -125,7 +128,7 @@ var palindrome = function(string) {
 // modulo(17,5) // 2
 // modulo(22,6) // 4
 var modulo = function(x, y) {
-    console.log(`x: ${x}, y: ${y}`);
+    // console.log(`x: ${x}, y: ${y}`);
     if(x + y=== 0){
         return NaN;
     }
